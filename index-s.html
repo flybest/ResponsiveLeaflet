@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Responsive Leaflet</title>
+    <!-- Font Awesome -->
+    <link href="frame/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- SemanticUI -->
+    <link href="frame/semantic-ui/1.8.1/semantic.css" rel="stylesheet">
+    <!-- Leaflet -->
+    <link href="frame/leaflet/0.7.3/leaflet.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Draw/leaflet.draw.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Sidebar/leaflet-sidebar.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Playback/Playback.Control.css" rel="stylesheet">
+    <!--  User CSS  -->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="frame/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="frame/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="ui menu fixed inverted">
+        <div class="title item">Responsive Leaflet</div>
+    </div>
+
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <ul class="sidebar-tabs" role="tablist">
+            <li><a href="#plane" role="tab"><i class="fa fa-plane"></i></a>
+            </li>
+            <li><a href="#radar" role="tab"><i class="fa fa-th"></i></a>
+            </li>
+            <li><a href="#cloud" role="tab"><i class="fa fa-cloud"></i></a>
+            </li>
+            <!--            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>-->
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content active">
+            <div class="sidebar-pane" id="plane">
+                <h1>航班信息</h1>
+            </div>
+            <div class="sidebar-pane" id="radar">
+                <h1>雷达图</h1>
+            </div>
+            <div class="sidebar-pane" id="cloud">
+                <h1>卫星云图</h1>
+            </div>
+            <!--            <div class="sidebar-pane" id="settings"><h1>Settings</h1></div>-->
+        </div>
+    </div>
+
+    <div id="map" class="sidebar-map">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="frame/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="frame/semantic-ui/1.8.1/semantic.min.js"></script>
+    <script src="frame/leaflet/0.7.3/leaflet-src.js"></script>
+    <script src="frame/leaflet/plugins/MultiTileLayer/L.TileLayer.Multi.js"></script>
+    <script src="frame/leaflet/plugins/Draw/leaflet.draw-src.js"></script>
+    <script src="frame/leaflet/plugins/Sidebar/leaflet-sidebar.js"></script>
+    <script src="frame/leaflet/plugins/Playback/Playback.Control.s.js"></script>
+<!--    <script src="frame/leaflet/plugins/Playback/LeafletPlayback.js"></script>-->
+    <!-- UserJS -->
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+</body>
+</html>

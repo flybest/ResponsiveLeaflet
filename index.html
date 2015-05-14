@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Responsive Leaflet</title>
+    <!-- Font Awesome -->
+    <link href="frame/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery UI -->
+    <link href="frame/jqueryui/1.11.4/jquery-ui.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="frame/bootstrap/3.3.2/css/bootstrap.css" rel="stylesheet">
+    <!-- Leaflet -->
+    <link href="frame/leaflet/0.7.3/leaflet.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Draw/leaflet.draw.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Sidebar/leaflet-sidebar.css" rel="stylesheet">
+    <link href="frame/leaflet/plugins/Playback/Playback.Control.css" rel="stylesheet">
+    <!--  User CSS  -->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="frame/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="frame/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-brand">Responsive Leaflet</div>
+    </div>
+
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <ul class="sidebar-tabs" role="tablist">
+            <li><a href="#plane" role="tab"><i class="fa fa-plane"></i></a>
+            </li>
+            <li><a href="#radar" role="tab"><i class="fa fa-th"></i></a>
+            </li>
+            <li><a href="#cloud" role="tab"><i class="fa fa-cloud"></i></a>
+            </li>
+            <!--            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>-->
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content active">
+            <div class="sidebar-pane" id="plane">
+                <h1>航班信息</h1>
+            </div>
+            <div class="sidebar-pane" id="radar">
+                <h1>雷达图</h1>
+
+<!--
+                <div id="playbackcontrol" class="lp">
+                    <p class="sectionlabel">叠加控制</p>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="checkbox" autocomplete="off" id="layername"> 全国雷达
+                        </label>
+                    </div>
+                    <p class="sectionlabel">播放控制</p>
+                    <div class="transport">
+                        <nav class="navbar navbar-default">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" id="play-pause" href="#"><i id="play-pause-icon" class="fa fa-play fa-lg"></i></a>
+                                </div>
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="">
+                                            <div id="clock-btn" class="clock">
+                                                <span id="cursor-date">yyyy年MM月dd日</span>
+                                                <br><span id="cursor-time">HH:mm:ss</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li>
+                                            <div id="time-slider"></div>
+                                        </li>
+                                        <li class="ctrl dropdown"> <a id="speed-btn" data-toggle="dropdown" href="#"><i class="fa fa-dashboard fa-lg"></i><br><span id="speed-icon-val" class="speed">1</span>x</a>
+                                            <div class="speed-menu dropdown-menu" role="menu" aria-labelledby="speed-btn">
+                                                <input id="speed-input" class="span1 speed" type="text" value="1">
+                                                <div id="speed-slider"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+-->
+
+
+            </div>
+            <div class="sidebar-pane" id="cloud">
+                <h1>卫星云图</h1>
+            </div>
+            <!--            <div class="sidebar-pane" id="settings"><h1>Settings</h1></div>-->
+        </div>
+    </div>
+
+    <div id="map" class="sidebar-map">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="frame/jquery/1.11.2/jquery.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="frame/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="frame/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="frame/leaflet/0.7.3/leaflet-src.js"></script>
+    <script src="frame/leaflet/plugins/MultiTileLayer/L.TileLayer.Multi.js"></script>
+    <script src="frame/leaflet/plugins/Draw/leaflet.draw.js"></script>
+    <script src="frame/leaflet/plugins/Sidebar/leaflet-sidebar.js"></script>
+    <script src="frame/leaflet/plugins/Playback/LeafletPlayback.js"></script>
+    <script src="frame/leaflet/plugins/Playback/Playback.Control.js"></script>
+    <!-- UserJS -->
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+</body>
+
+</html>
