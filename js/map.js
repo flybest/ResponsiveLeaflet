@@ -1,27 +1,62 @@
-var map, layerControl, popup, tdtBase, tdtMark;
+var map, layerControl, popup;
+var airLineArray;
+var markerGroup, isolineFeature;
 
 $(document).ready(function () {
     popup = L.popup();
     initMap();
     initLayerControl();
     initDrawControl();
+    initAirLine();
     addBaseMap();
-//    addImageOverlay();
-    addMaker();
+//    addMaker();
+    addSideBar();
 
-    var sidebar = L.control.sidebar('sidebar').addTo(map);
-    //map.on('click', onMapClick);
-    //map.on('baselayerchange', onBaseLayerChange);
+//    map.on('click', onMapClick);
+//    map.on('baselayerchange', onBaseLayerChange);
+    
+    $('#testBtn').click(function(){
+        
+        if(!$('#resolution').val()){
+            alert('error');
+            return;
+        }
+        
+        
+        $.getJSON("data/bayannaoer.geojson",function(data){
+            console.log(data);
+            
+            var markers=[];
+            $.each(data.features, function(i,value){     
+                var myIcon = L.divIcon({className: 'my-div-icon',html:this.properties.VALUE});
+                // you can set .my-div-icon styles in CSS
+                markers.push(L.marker([this.geometry.coordinates[1],this.geometry.coordinates[0]], {icon: myIcon}));    
+            })
+            
+            if(markerGroup){
+                map.removeLayer(markerGroup);
+            }
+            markerGroup=L.featureGroup(markers);
+            map.addLayer(markerGroup);
+            
+            var breaks = [7, 14, 21, 28, 35];
+            var isolined = turf.isolines(data, 'VALUE', $("#resolution").val(), breaks);
+            
+            console.log(isolined);
+            if(isolineFeature){
+                map.removeLayer(isolineFeature);
+            }
+            
+            isolineFeature=L.geoJson(isolined);
+            map.addLayer(isolineFeature);
 
-    var radarplayback = new L.Playback(map,QRJson,null,null);
-    var radarplaybackcontrol = new L.Playback.Control(radarplayback,"全国雷达");
-    radarplaybackcontrol.addTo('radar');
-
-    var cloudplayback = new L.Playback(map,fy2Json,null,null);
-    var cloudplaybackcontrol = new L.Playback.Control(cloudplayback,"卫星云图");
-    cloudplaybackcontrol.addTo('cloud');
-
+        });
+        
+         
+    });
 });
+
+
 
 var initMap = function () {
     map = L.map('map', {
@@ -32,7 +67,7 @@ var initMap = function () {
 var initLayerControl = function () {
     layerControl = L.control.layers();
     layerControl.addTo(map);
-}
+};
 
 var initDrawControl = function () {
     // Initialise the FeatureGroup to store editable layers
@@ -72,10 +107,17 @@ var initDrawControl = function () {
     L.drawLocal.draw.toolbar.undo.text = "删除最后的标记点";
     L.drawLocal.draw.toolbar.actions.text = "取消";
     L.drawLocal.draw.toolbar.buttons.polyline = "绘制折线";
+};
+
+var initAirLine = function(){
+    airLineArray = new Dictionary();
+    $.each(airLineJson.airLineList, function(){     
+        airLineArray.put(this.id,L.airLine(this.line));     
+    });  
 }
 
 var addBaseMap=function(){
-        //多层地图，但实际只是在不同级别显示不同地图，并不能同时显示
+    //多层地图，但实际只是在不同级别显示不同地图，并不能同时显示
     //    L.TileLayer.multi({
     //        18: {
     //            url: 'http://t0.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}'
@@ -96,16 +138,16 @@ var addBaseMap=function(){
 
     //Esri 地图
     var esriBase = L.tileLayer('http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 18,
+        maxZoom: 18
     });
 
     //天地图地图 行政区和标记分为两层
-    tdtBase = L.tileLayer('http://t0.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}', {
-        maxZoom: 18,
+    var tdtBase = L.tileLayer('http://t0.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}', {
+        maxZoom: 18
     });
 
-    tdtMark = L.tileLayer('http://t5.tianditu.cn/DataServer?T=cva_w&X={x}&Y={y}&L={z}', {
-        maxZoom: 18,
+    var tdtMark = L.tileLayer('http://t5.tianditu.cn/DataServer?T=cva_w&X={x}&Y={y}&L={z}', {
+        maxZoom: 18
     });
 
     //Mapbox地图
@@ -117,26 +159,14 @@ var addBaseMap=function(){
         id: 'examples.map-i875mjb7'
     });
 
-    map.addLayer(tdtBase);
-    layerControl.addBaseLayer(tdtBase,"天地图地图");
+    var tdtGroup=L.layerGroup([tdtBase,tdtMark]);
+    tdtGroup.addTo(map);
+    
+    layerControl.addBaseLayer(tdtGroup,"天地图地图");
     layerControl.addBaseLayer(gdBase,"高德地图");
     layerControl.addBaseLayer(esriBase,"Esri地图");
     layerControl.addBaseLayer(mapboxBase,"MapBox地图");
-
-    dealTdtMarkLayer(map.hasLayer(tdtBase));
-}
-
-//var addImageOverlay=function(){
-//    var imageUrl = 'data/QR/201304191600.png',
-//        imageBounds = [[12.2, 73.0], [54.2, 135]];
-//    var imageUrlCloud = 'data/FY2E/20130419030000.PNG',
-//        imageBoundsCloud = [[6, 61.5], [60, 145]];
-//    var radar = L.imageOverlay(imageUrl, imageBounds,{opacity:0.5});
-//    var cloud = L.imageOverlay(imageUrlCloud, imageBoundsCloud);
-//
-//    layerControl.addOverlay(radar,"雷达图");
-//    layerControl.addOverlay(cloud,"卫星云图");
-//}
+};
 
 var addMaker = function () {
     L.marker([39.91579, 116.39088]).addTo(map)
@@ -155,6 +185,31 @@ var addMaker = function () {
     //  ]).addTo(map).bindPopup("I am a polygon.");
 };
 
+var addSideBar = function () {
+    var sidebar = L.control.sidebar('sidebar').addTo(map);
+    
+    var radarplayback = new L.Playback(map, QRJson, null, null);
+    var radarplaybackcontrol = new L.Playback.Control(radarplayback, "全国雷达");
+    radarplaybackcontrol.addTo('radar');
+
+    var cloudplayback = new L.Playback(map, fy2Json, null, null);
+    var cloudplaybackcontrol = new L.Playback.Control(cloudplayback, "卫星云图");
+    cloudplaybackcontrol.addTo('cloud');
+};
+
+var setAirLineVisiable = function(airLineID, activeButton){
+    var selAirLine = airLineArray.get(airLineID);
+    if(selAirLine.isVisiable()){
+        selAirLine.removeFrom(map);
+        $(activeButton).text("地图标记");
+        $(activeButton).removeClass("btn-danger");
+    }else{
+        selAirLine.addTo(map);
+        $(activeButton).text("取消显示");
+        $(activeButton).addClass("btn-danger");
+    };
+}
+
 function onMapClick(e) {
 //    popup
 //        .setLatLng(e.latlng)
@@ -163,16 +218,6 @@ function onMapClick(e) {
 }
 
 function onBaseLayerChange(e){
-    dealTdtMarkLayer(e.layer===tdtBase);
+
 }
 
-//true为添加  false为删除
-function dealTdtMarkLayer(statue){
-    if(statue){
-        map.addLayer(tdtMark);
-        tdtMark.bringToFront();
-    }
-    else if(map.hasLayer(tdtMark)){
-        map.removeLayer(tdtMark);
-    }
-}

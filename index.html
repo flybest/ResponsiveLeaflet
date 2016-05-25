@@ -43,13 +43,37 @@
             </li>
             <li><a href="#cloud" role="tab"><i class="fa fa-cloud"></i></a>
             </li>
-            <!--            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>-->
+            <li><a href="#test" role="tab"><i class="fa fa-gear"></i></a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="sidebar-content active">
             <div class="sidebar-pane" id="plane">
                 <h1>航班信息</h1>
+                <table id="airlineinfo" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                           <td>航班号</td>
+                           <td>航线</td>
+                           <td>机型</td>
+                           <td>地图查看</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                           <td>CA1107</td>
+                           <td>呼和浩特-北京</td>
+                           <td>737-800</td>
+                           <td><button type="button" class="btn btn-sm btn-info" onclick="setAirLineVisiable('CA1107',this);">地图标记</button></td>
+                        </tr>
+                        <tr>
+                           <td>CA1120</td>
+                           <td>郑州-北京</td>
+                           <td>737-800</td>
+                           <td><button type="button" class="btn btn-sm btn-info" onclick="setAirLineVisiable('CA1120',this);">地图标记</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="sidebar-pane" id="radar">
                 <h1>雷达图</h1>
@@ -107,7 +131,13 @@
             <div class="sidebar-pane" id="cloud">
                 <h1>卫星云图</h1>
             </div>
-            <!--            <div class="sidebar-pane" id="settings"><h1>Settings</h1></div>-->
+            <div class="sidebar-pane" id="test">
+                <h1>测试专用</h1>
+                <form class="form-inline">
+                    <input class="form-control" type="text" id="resolution"/>
+                    <button class="btn btn-default" id="testBtn">测试</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -122,13 +152,17 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="frame/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="frame/leaflet/0.7.3/leaflet-src.js"></script>
+    <script src="frame/turf/2.0.0/turf.min.js"></script>
     <script src="frame/leaflet/plugins/MultiTileLayer/L.TileLayer.Multi.js"></script>
     <script src="frame/leaflet/plugins/Draw/leaflet.draw.js"></script>
     <script src="frame/leaflet/plugins/Sidebar/leaflet-sidebar.js"></script>
     <script src="frame/leaflet/plugins/Playback/LeafletPlayback.js"></script>
     <script src="frame/leaflet/plugins/Playback/Playback.Control.js"></script>
+    <script src="frame/leaflet/plugins/MovingMarker/MovingMarker.js"></script>
     <!-- UserJS -->
     <script src="js/data.js"></script>
+    <script src="js/basic.js"></script>
+    <script src="js/airline.js"></script>
     <script src="js/map.js"></script>
 </body>
 
